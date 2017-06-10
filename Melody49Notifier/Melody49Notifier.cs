@@ -24,7 +24,23 @@ namespace Melody49Notifier
 
         private static bool TheaterScheduleHasUpdated(TraceWriter log, out TheaterSchedule currentTheaterSchedule)
         {
-            throw new NotImplementedException();
+            ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager = new CurrentTheaterScheduleDataFileManager(log);
+            ICurrentTheaterScheduleWebRequestManager currentTheaterScheduleWebRequestManager = null;
+            ITheaterScheduleComparer theaterScheduleComparer = null;
+
+            TheaterSchedule currentTheaterScheduleFromFile = currentTheaterScheduleDataFileManager.SelectCurrentTheaterSchedule();
+            TheaterSchedule currentTheaterScheduleFromWebSite = currentTheaterScheduleWebRequestManager.GetCurrentTheaterSchedule();
+
+            currentTheaterSchedule = currentTheaterScheduleFromWebSite;
+
+            if (!theaterScheduleComparer.AreEqual(currentTheaterScheduleFromFile, currentTheaterScheduleFromWebSite))
+            {
+                currentTheaterScheduleDataFileManager.UpdateCurrentTheaterSchedule(currentTheaterScheduleFromWebSite);
+
+                return false;
+            }
+
+            return true;
         }
 
         private static void SendNotification(TraceWriter log, TheaterSchedule currentTheaterSchedule)
