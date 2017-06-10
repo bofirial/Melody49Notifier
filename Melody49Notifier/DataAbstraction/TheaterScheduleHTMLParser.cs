@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Melody49Notifier.Models;
 using Microsoft.Azure.WebJobs.Host;
+using HtmlAgilityPack;
 
 namespace Melody49Notifier.DataAbstraction
 {
@@ -19,7 +20,16 @@ namespace Melody49Notifier.DataAbstraction
 
         public TheaterSchedule ParseTheaterScheduleHTML(string html)
         {
-            throw new NotImplementedException();
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(html);
+
+            TheaterSchedule theaterSchedule = new TheaterSchedule();
+
+            //theaterSchedule.ScheduleDescription = htmlDocument.DocumentNode.Descendants("div").Where(x => x?.Attributes?["id"]?.Value == "playweek").First().ChildNodes.First().InnerText;
+
+            theaterSchedule.ScheduleDescription = htmlDocument.DocumentNode.SelectNodes("//div[@id=\"playweek\"]/p").First().InnerText;
+
+            return theaterSchedule;
         }
     }
 }
