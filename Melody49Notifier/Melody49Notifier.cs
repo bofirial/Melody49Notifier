@@ -3,6 +3,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Melody49Notifier.DataAbstraction;
 using Melody49Notifier.Models;
+using Melody49Notifier.Notification;
 
 namespace Melody49Notifier
 {
@@ -10,7 +11,7 @@ namespace Melody49Notifier
     {
 
         [FunctionName("Melody49Notifier")]
-        public static void Run([TimerTrigger("0/10 * * * * *")]TimerInfo myTimer, TraceWriter log) //[TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
+        public static void Run([TimerTrigger("0/1 * * * * *")]TimerInfo myTimer, TraceWriter log) //[TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
         {
             log.Info($"C# Timer trigger function started at: {DateTime.Now}.");
 
@@ -45,7 +46,9 @@ namespace Melody49Notifier
 
         private static void SendNotification(TraceWriter log, TheaterSchedule currentTheaterSchedule)
         {
-            throw new NotImplementedException();
+            INotificationEmailSender notificationEmailSender = new NotificationEmailSender(log);
+
+            notificationEmailSender.SendNotificationEmail(currentTheaterSchedule);
         }
     }
 }
