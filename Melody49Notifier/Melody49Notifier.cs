@@ -26,7 +26,7 @@ namespace Melody49Notifier
         {
             ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager = new CurrentTheaterScheduleDataFileManager(log);
             ICurrentTheaterScheduleWebRequestManager currentTheaterScheduleWebRequestManager = new CurrentTheaterScheduleWebRequestManager(log, new TheaterScheduleHTMLParser(log));
-            ITheaterScheduleComparer theaterScheduleComparer = null;
+            ITheaterScheduleComparer theaterScheduleComparer = new TheaterScheduleComparer(log);
 
             TheaterSchedule currentTheaterScheduleFromFile = currentTheaterScheduleDataFileManager.SelectCurrentTheaterSchedule();
             TheaterSchedule currentTheaterScheduleFromWebSite = currentTheaterScheduleWebRequestManager.GetCurrentTheaterSchedule();

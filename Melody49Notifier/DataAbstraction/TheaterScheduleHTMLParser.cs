@@ -64,7 +64,7 @@ namespace Melody49Notifier.DataAbstraction
                 }
             }
 
-            log.Verbose($"Parsed Theater Schedule HTML into a TheaterSchedule. (Schedule Description: {theaterSchedule.ScheduleDescription})");
+            log.Verbose($"Parsed the Theater Schedule HTML into a TheaterSchedule. (Schedule Description: {theaterSchedule.ScheduleDescription})");
 
             return theaterSchedule;
         }
