@@ -22,7 +22,7 @@ namespace Melody49Notifier.Notification
             MailMessage message = new MailMessage()
             {
                 From = new MailAddress(Environment.GetEnvironmentVariable("FromEmailAddress"), "Melody 49 Drive-In"),
-                Subject = "New Showings at the Melody 49 Drive-In",
+                Subject = $"New Showings at the Melody 49 Drive-In - {currentTheaterSchedule.ScheduleDescription}",
                 Body = notificationEmailGenerator.CreateFromTemplate(currentTheaterSchedule),
                 IsBodyHtml = true
             };
