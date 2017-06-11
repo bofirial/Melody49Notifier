@@ -46,7 +46,7 @@ namespace Melody49Notifier
 
         private static void SendNotification(TraceWriter log, TheaterSchedule currentTheaterSchedule)
         {
-            INotificationEmailSender notificationEmailSender = new NotificationEmailSender(log);
+            INotificationEmailSender notificationEmailSender = new NotificationEmailSender(log, new NotificationEmailGenerator(log));
 
             notificationEmailSender.SendNotificationEmail(currentTheaterSchedule);
         }
