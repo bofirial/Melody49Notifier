@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Melody49Notifier.Models;
 using Microsoft.Azure.WebJobs.Host;
 using System.Net.Mail;
 using System.Net;
-using System.IO;
 
 namespace Melody49Notifier.Notification
 {
     public class NotificationEmailSender : INotificationEmailSender
     {
+        private readonly TraceWriter log;
         private readonly INotificationEmailGenerator notificationEmailGenerator;
 
         public NotificationEmailSender(TraceWriter log, INotificationEmailGenerator notificationEmailGenerator)
         {
-            Log = log;
+            this.log = log;
             this.notificationEmailGenerator = notificationEmailGenerator;
         }
-
-        public TraceWriter Log { get; }
-
+        
         public void SendNotificationEmail(TheaterSchedule currentTheaterSchedule)
         {
             MailMessage message = new MailMessage()
@@ -46,6 +40,8 @@ namespace Melody49Notifier.Notification
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(Environment.GetEnvironmentVariable("SMTPUserName"), Environment.GetEnvironmentVariable("SMTPPassword"), "")
             };
+
+            log.Info($"Sending the Current Theater Schedule Notification to: {string.Join(", ", emailAddresses)}.");
 
             smtpClient.Send(message);
         }
