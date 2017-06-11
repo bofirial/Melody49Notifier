@@ -11,16 +11,36 @@ namespace Melody49Notifier.Notification
 {
     public class NotificationEmailGenerator : INotificationEmailGenerator
     {
+        private readonly TraceWriter log;
+
         public NotificationEmailGenerator(TraceWriter log)
         {
-            Log = log;
+            this.log = log;
         }
-
-        public TraceWriter Log { get; }
 
         public string CreateFromTemplate(TheaterSchedule currentTheaterSchedule)
         {
-            return File.ReadAllText("EmailTemplate.html");
+            string email = File.ReadAllText("EmailTemplate.html");
+            string showingTemplate = File.ReadAllText("EmailShowingTemplate.html");
+
+            string showings = string.Empty;
+
+            foreach (TheaterShowing theaterShowing in currentTheaterSchedule.Showings)
+            {
+                string showing = string.Copy(showingTemplate);
+
+                showing = showing.Replace("%Screen%", theaterShowing.Screen);
+                showing = showing.Replace("%MovieDescription%", theaterShowing.MovieDescription);
+                showing = showing.Replace("%ActorDescription%", theaterShowing.ActorDescription);
+                showing = showing.Replace("%ShowingScheduleDescription%", theaterShowing.ShowingScheduleDescription);
+
+                showings += showing;
+            }
+
+            email = email.Replace("%ScheduleDescription%", currentTheaterSchedule.ScheduleDescription);
+            email = email.Replace("%Showings%", showings);
+
+            return email;
         }
     }
 }
