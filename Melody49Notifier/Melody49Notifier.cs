@@ -11,7 +11,7 @@ namespace Melody49Notifier
     {
 
         [FunctionName("Melody49Notifier")]
-        public static void Run([TimerTrigger("0/1 * * * * *")]TimerInfo myTimer, TraceWriter log) //[TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
+        public static void Run([TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
         {
             log.Info($"C# Timer trigger function started at: {DateTime.Now}.");
 
