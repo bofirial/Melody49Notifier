@@ -23,15 +23,17 @@ namespace Melody49Notifier.DataAbstraction
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
 
-            TheaterSchedule theaterSchedule = new TheaterSchedule();
-
-            theaterSchedule.ScheduleDescription = GetScheduleDescription(htmlDocument);
+            TheaterSchedule theaterSchedule = new TheaterSchedule()
+            {
+                TheaterName = "Melody 49",
+                ScheduleDescription = GetScheduleDescription(htmlDocument),
+                Showings = new List<TheaterShowing>()
+            };
 
             HtmlNodeCollection tableRows = GetTheaterShowingsTableRows(htmlDocument);
 
             string currentScreen = string.Empty;
             TheaterShowing currentTheaterShowing = null;
-            theaterSchedule.Showings = new List<TheaterShowing>();
 
             foreach (HtmlNode tableRow in tableRows)
             {
@@ -61,6 +63,8 @@ namespace Melody49Notifier.DataAbstraction
                     }
                 }
             }
+
+            log.Verbose($"Parsed Theater Schedule HTML into a TheaterSchedule. (Schedule Description: {theaterSchedule.ScheduleDescription})");
 
             return theaterSchedule;
         }
