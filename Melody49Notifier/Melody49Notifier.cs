@@ -38,10 +38,10 @@ namespace Melody49Notifier
             {
                 currentTheaterScheduleDataFileManager.UpdateCurrentTheaterSchedule(currentTheaterScheduleFromWebSite);
 
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         private static void SendNotification(TraceWriter log, TheaterSchedule currentTheaterSchedule)
