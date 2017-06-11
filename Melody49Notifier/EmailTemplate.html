@@ -5,22 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melody 49 Drive-In</title>
     <style>
-        html, body {
-            height: 100%;
-        }
 
         body {
-            background-color: #800000;
-            background: linear-gradient(to right, #460000 0%,#800000 15%,#800000 85%,#460000 100%);
+            margin: 0
         }
 
-        header, footer, .content {
-            background: white;
+        header, .footer, .content {
             text-align: center;
-            width: 75%;
             margin: auto;
             font-family: Arial, Helvetica, sans-serif;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         header h1, header h2 {
@@ -30,21 +24,21 @@
         header .theater {
             padding-bottom: 10px;
             font-family: "Brush Script MT", cursive;
-            font-size: 64px;
-            text-shadow: 2px 2px #000;
+            font-size: 36px;
+        }
+
+        header .scheduleDescription {
+            font-size: 14px;
+            color: #999
         }
 
         header .theater a {
             text-decoration: none;
-            color: #800000;
+            color: #DDD;
         }
 
         header .theater a:hover {
-            color: #af0000;
-        }
-
-        header .scheduleDescription {
-            color: #444
+            color: #BBB;
         }
 
         .content {
@@ -55,57 +49,47 @@
             margin: 0;
             padding: 5px 0;
             list-style-type: none;
-            background-color: white;
         }
 
         .showings li {
-            padding: 5px 12% 15px;
-            border: 8px solid black;
-            border-bottom: none;
-            margin: 5px 5px 0;
+            padding: 10px;
+            margin: 10px 5px;
             background-color: #ccc;
+            border-radius: 5px;
         }
 
-        .showings li:nth-child(even) {
-            background-color: #999;
-            border-top: none;
-            margin-top: 0;
-            border-bottom: 8px solid black;
-        }
-
-        .showings li:nth-child(3) {
-            margin-top: 20px;
+        .showings li p {
+            margin: 0;
+            padding-bottom: 8px;
+            color: black;
         }
 
         .screen {
-            display: block;
-            line-height: 24px;
-            float: left;
-            padding-bottom: 8px;
+            text-align: left;
+            font-size: 12px;
         }
 
         .movieDescription {
             font-weight: bold;
-            font-size: 24px;
-            display: block;
-            padding-bottom: 8px;
+            font-size: 18px;
         }
 
         .actorDescription {
-
+            font-size: 12px;
         }
 
         .showingScheduleDescription {
-            float: right;
+            font-size: 14px;
         }
 
-        footer {
-            font-size: 12px;
+        .footer {
+            font-size: 10px;
+            color: #999
         }
 
     </style>
 </head>
-<body>
+<body style="background-color:#400">
     <header>
         <h1 class="theater"><a href="http://www.chakerestheatres.com/melody49di.php">Melody 49 Drive-In</a></h1>
         <h2 class="scheduleDescription">%ScheduleDescription%</h2>
@@ -113,34 +97,10 @@
 
     <div class="content">
         <ul class="showings">
-            <!--%Showings%-->
-            <li>
-                <span class="screen">Screen 1</span>
-                <span class="movieDescription">Wonder Woman (PG13, 140min)</span>
-                <span class="actorDescription">Gal Gadot</span>
-                <span class="showingScheduleDescription">Friday - Thursday 9:30</span>
-            </li>
-            <li>
-                <span class="screen">%Screen%</span>
-                <span class="movieDescription">%MovieDescription%</span>
-                <span class="actorDescription">%ActorDescription%</span>
-                <span class="showingScheduleDescription">%ShowingScheduleDescription%</span>
-            </li>
-            <li>
-                <span class="screen">%Screen%</span>
-                <span class="movieDescription">%MovieDescription%</span>
-                <span class="actorDescription">%ActorDescription%</span>
-                <span class="showingScheduleDescription">%ShowingScheduleDescription%</span>
-            </li>
-            <li>
-                <span class="screen">%Screen%</span>
-                <span class="movieDescription">%MovieDescription%</span>
-                <span class="actorDescription">%ActorDescription%</span>
-                <span class="showingScheduleDescription">%ShowingScheduleDescription%</span>
-            </li>
+            %Showings%
         </ul>
     </div>
 
-    <footer>©2017 Melody 49 Drive-In Notifier</footer>
+    <div class="footer">©2017 Melody 49 Drive-In Notifier</div>
 </body>
 </html>
