@@ -10,7 +10,7 @@ namespace Melody49Notifier
     public static class Melody49Notifier
     {
         [FunctionName("Melody49Notifier")]
-        public static void Run([TimerTrigger("0/10 * * * * * ")]TimerInfo myTimer, TraceWriter log) //[TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
+        public static void Run([TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
         {
             SetTraceLevel(log);
 
