@@ -17,7 +17,12 @@ namespace Melody49Notifier
 
             if (TheaterScheduleHasUpdated(log, out TheaterSchedule currentTheaterSchedule))
             {
+                log.Info($"Theater Schedule has updated.  Sending Notifications.");
                 SendNotification(log, currentTheaterSchedule);
+            }
+            else
+            {
+                log.Info($"Theater Schedule has not updated.");
             }
 
             log.Info($"C# Timer trigger function completed at: {DateTime.Now}.");
