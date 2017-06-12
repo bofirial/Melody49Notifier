@@ -48,7 +48,7 @@ namespace Melody49Notifier.DataAbstraction
                 {
                     if (IsShowingScheduleRow(column2Text))
                     {
-                        currentTheaterShowing.ShowingScheduleDescription = $"{currentTheaterShowing.ShowingScheduleDescription}{column1Text} {column2Text}\r\n";
+                        currentTheaterShowing.ShowingScheduleDescription = $"{currentTheaterShowing.ShowingScheduleDescription}{column1Text} {column2Text}<br />";
                     }
                     else
                     {
