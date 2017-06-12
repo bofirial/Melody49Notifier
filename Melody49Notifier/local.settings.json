@@ -1,7 +1,7 @@
 {
     "IsEncrypted": false,
   "Values": {
-    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=jschaferfunctionstorage;AccountKey=FVo4dcn1nq1SlhgY1dy52iSfQAaemPTUeWw/dGrKsb5nIglgKWvWYTbceTM4+nVRyY5JKnPLBRgzk1W71dtG4Q==;EndpointSuffix=core.windows.net",
+    "AzureWebJobsStorage": "",
     "AzureWebJobsDashboard": ""
   }
 }
