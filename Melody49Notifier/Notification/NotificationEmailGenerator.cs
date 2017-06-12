@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Melody49Notifier.Models;
 using Microsoft.Azure.WebJobs.Host;
 using System.IO;
+using System.Reflection;
 
 namespace Melody49Notifier.Notification
 {
@@ -20,8 +21,8 @@ namespace Melody49Notifier.Notification
 
         public string CreateFromTemplate(TheaterSchedule currentTheaterSchedule)
         {
-            string email = File.ReadAllText("EmailTemplate.html");
-            string showingTemplate = File.ReadAllText("EmailShowingTemplate.html");
+            string email = GetEmbeddedResourceText("Melody49Notifier.EmailTemplate.html");
+            string showingTemplate = GetEmbeddedResourceText("Melody49Notifier.EmailShowingTemplate.html");
 
             string showings = string.Empty;
 
@@ -41,6 +42,17 @@ namespace Melody49Notifier.Notification
             email = email.Replace("%Showings%", showings);
 
             return email;
+        }
+
+        private static string GetEmbeddedResourceText(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }
