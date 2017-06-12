@@ -15,22 +15,25 @@ namespace Melody49Notifier
         {
             log.Info($"C# Timer trigger function started at: {DateTime.Now}.");
 
-            if (TheaterScheduleHasUpdated(log, out TheaterSchedule currentTheaterSchedule))
+            ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager = new CurrentTheaterScheduleDataFileManager(log);
+
+            if (TheaterScheduleHasUpdated(log, currentTheaterScheduleDataFileManager, out TheaterSchedule currentTheaterSchedule))
             {
-                log.Info($"Theater Schedule has updated.  Sending Notifications.");
+                log.Info($"The Theater Schedule has updated.  Sending Notifications.");
                 SendNotification(log, currentTheaterSchedule);
+
+                currentTheaterScheduleDataFileManager.UpdateCurrentTheaterSchedule(currentTheaterSchedule);
             }
             else
             {
-                log.Info($"Theater Schedule has not updated.");
+                log.Info($"The Theater Schedule has not updated.");
             }
 
             log.Info($"C# Timer trigger function completed at: {DateTime.Now}.");
         }
 
-        private static bool TheaterScheduleHasUpdated(TraceWriter log, out TheaterSchedule currentTheaterSchedule)
-        {
-            ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager = new CurrentTheaterScheduleDataFileManager(log);
+    private static bool TheaterScheduleHasUpdated(TraceWriter log, ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager, out TheaterSchedule currentTheaterSchedule)
+    {
             ICurrentTheaterScheduleWebRequestManager currentTheaterScheduleWebRequestManager = new CurrentTheaterScheduleWebRequestManager(log, new TheaterScheduleHTMLParser(log));
             ITheaterScheduleComparer theaterScheduleComparer = new TheaterScheduleComparer(log);
 
@@ -39,14 +42,7 @@ namespace Melody49Notifier
 
             currentTheaterSchedule = currentTheaterScheduleFromWebSite;
 
-            if (!theaterScheduleComparer.AreEqual(currentTheaterScheduleFromFile, currentTheaterScheduleFromWebSite))
-            {
-                currentTheaterScheduleDataFileManager.UpdateCurrentTheaterSchedule(currentTheaterScheduleFromWebSite);
-
-                return true;
-            }
-
-            return false;
+            return !theaterScheduleComparer.AreEqual(currentTheaterScheduleFromFile, currentTheaterScheduleFromWebSite);
         }
 
         private static void SendNotification(TraceWriter log, TheaterSchedule currentTheaterSchedule)
