@@ -9,10 +9,11 @@ namespace Melody49Notifier
 {
     public static class Melody49Notifier
     {
-
         [FunctionName("Melody49Notifier")]
-        public static void Run([TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
+        public static void Run([TimerTrigger("0/10 * * * * * ")]TimerInfo myTimer, TraceWriter log) //[TimerTrigger("0 0 8-18 * * FRI")]TimerInfo myTimer, TraceWriter log)
         {
+            SetTraceLevel(log);
+
             log.Info($"C# Timer trigger function started at: {DateTime.Now}.");
 
             ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager = new CurrentTheaterScheduleDataFileManager(log);
@@ -32,7 +33,27 @@ namespace Melody49Notifier
             log.Info($"C# Timer trigger function completed at: {DateTime.Now}.");
         }
 
-    private static bool TheaterScheduleHasUpdated(TraceWriter log, ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager, out TheaterSchedule currentTheaterSchedule)
+        private static void SetTraceLevel(TraceWriter log)
+        {
+            switch (Environment.GetEnvironmentVariable("TraceLevel")?.ToLower())
+            {
+                case "error":
+                    log.Level = System.Diagnostics.TraceLevel.Error;
+                    break;
+                case "warning":
+                    log.Level = System.Diagnostics.TraceLevel.Warning;
+                    break;
+                case "verbose":
+                    log.Level = System.Diagnostics.TraceLevel.Verbose;
+                    break;
+                case "info":
+                default:
+                    log.Level = System.Diagnostics.TraceLevel.Info;
+                    break;
+            }
+        }
+
+        private static bool TheaterScheduleHasUpdated(TraceWriter log, ICurrentTheaterScheduleDataFileManager currentTheaterScheduleDataFileManager, out TheaterSchedule currentTheaterSchedule)
     {
             ICurrentTheaterScheduleWebRequestManager currentTheaterScheduleWebRequestManager = new CurrentTheaterScheduleWebRequestManager(log, new TheaterScheduleHTMLParser(log));
             ITheaterScheduleComparer theaterScheduleComparer = new TheaterScheduleComparer(log);
